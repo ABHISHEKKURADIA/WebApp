@@ -5,7 +5,6 @@ const { parse } = require('path')
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'admin',
     database: 'webapp'
 })
 
