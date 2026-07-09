@@ -2,6 +2,7 @@ const http = require('http')
 const mysql = require('mysql')
 const fs = require('fs')
 const { parse } = require('path')
+const path = require('path')
 
 const db = mysql.createConnection({
     host: 'host.docker.internal',
@@ -21,7 +22,7 @@ db.connect((err) => {
 const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/') {
-        fs.readFile(path.join(__dirname, 'index.html'), (err, content) => {
+        fs.readFile(path.join(__dirname, 'index.htm'), (err, content) => {
             if (err) {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('Server Error: Cannot load index page');
