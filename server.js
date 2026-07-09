@@ -5,7 +5,7 @@ const { parse } = require('path')
 const path = require('path')
 
 const db = mysql.createConnection({
-    host: 'host.docker.internal',
+    host: 'db',
     user: 'root',
     database: 'myDB'
 })
