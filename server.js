@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
 
             db.query(queryText, (err, result) => {
                 if (err) {
-                    console.err('Failed during Database update:', err)
+                    console.error('Failed during Database update:', err)
                     res.writeHead(500, { 'content-Type': 'text/plain' })
                     return res.end('Internal Server Error: Could not save data.')
                 }
