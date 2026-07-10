@@ -4,20 +4,12 @@ const fs = require('fs')
 const { parse } = require('path')
 const path = require('path')
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: 'db',
     user: 'root',
     password: 'Test@123',
-    database: 'myDB'
-})
-
-db.connect((err) => {
-    if (err) {
-        console.error('Something is not working in SQL', err)
-    }
-    else {
-        console.log('Sucessfully connected to mySQL DB')
-    }
+    database: 'myDB',
+    connectionLimit: 10
 })
 
 const server = http.createServer((req, res) => {
@@ -48,7 +40,7 @@ const server = http.createServer((req, res) => {
 
             console.log(`Received info for ${name} <${email}>`)
 
-            const queryText = `INSERT INTO users VALUES(${name},${email})`
+            const queryText = `INSERT INTO users VALUES('${name}','${email}')`
 
             db.query(queryText, (err, result) => {
                 if (err) {
@@ -56,15 +48,15 @@ const server = http.createServer((req, res) => {
                     res.writeHead(500, { 'content-Type': 'text/plain' })
                     return res.end('Internal Server Error: Could not save data.')
                 }
-                else {
-                    console.log(`Sucessfully Added Username: ${result.insertId}`)
-                    res.writeHead(200, { 'content-Type': 'text/plain' })
-                    res.end(`
+
+                console.log(`Sucessfully Added Username: ${result.insertId}`)
+                res.writeHead(200, { 'content-Type': 'text/plain' })
+                res.end(`
                         <h2>Sucess!</h2>
                         <p>Thank you, ${name} your email ${email} has been saved.</p>
                         <a href="javascript:history.back()">Go Back</a>
                         `)
-                }
+
             })
 
             res.end('Data Received')
