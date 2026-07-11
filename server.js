@@ -69,14 +69,73 @@ const server = http.createServer((req, res) => {
 
     }
 
-    else if (req.method == 'GET' && req.url == '/display') {
+    else if (req.method == 'GET' && req.url == '/display?') {
         const query = "SELECT * from users;"
-        db.query(query, (err, result, field) => {
+        db.query(query, (err, result) => {
             if (err) {
                 console.error('Error During Database Read: ', err);
                 return;
             }
             console.log('Fetched Data: ', result)
+            let htmlResponse = `
+        <h2>Registered Users Are:</h2>
+        <table>
+        <tr>
+        <th>Name</ht>
+        <th>Email</th>
+        </tr>
+        `
+
+            result.forEach(user => {
+                htmlResponse += `
+            <tr>
+            <td>${user.user_name}</td>
+            <td>${user.user_mail}</td>
+            </tr>
+            `
+            });
+
+            htmlResponse += `
+        </table>
+        <br><br>
+        <a href="javascript:history.back()">Go Back</a>
+        `
+            res.writeHead(200, { "content-type": "text/html" });
+            res.end(htmlResponse);
+
+
+        })
+    }
+
+    else if (req.method == 'POST' && req.url == '/remove?') {
+        let storage = '';
+
+        req.on('data', chunk => {
+            storage += chunk.toString();
+        })
+
+        req.on('end', () => {
+            const parsedData = new URLSearchParams(storage)
+            const emailToDelete = parsedData.get('deleteMail')
+            console.log(`Attempt to Delete ${emailToDelete}`)
+
+            const query = 'DELETE FROM users WHERE user_mail=?'
+
+            db.query(query, [emailToDelete], (err) => {
+                if (err) {
+                    console.error('Error During user id removal: ', err)
+                    res.writeHead(500, { "content-type": "text/plain" })
+                    return res.end('Internal Server Error')
+                }
+            })
+
+            res.writeHead(200, { "content-type": "text/html" })
+            res.end(`
+                    <h2>Sucess!</h2>
+                    <p>The User ${emailToDelete} is now removed.</p>
+                    <br><br>
+                    <a href="javascript:history.back()">Go Back</a>
+                `)
         })
 
     }
