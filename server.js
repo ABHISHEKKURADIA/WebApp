@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const http = require('http')
+const https = require('https')
 const mysql = require('mysql')
 const fs = require('fs')
 const { parse } = require('path')
@@ -16,7 +16,7 @@ const db = mysql.createPool({
 
 const PORT = process.env.PORT;
 
-const server = http.createServer((req, res) => {
+const server = https.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/') {
         fs.readFile(path.join(__dirname, 'index.htm'), (err, content) => {
