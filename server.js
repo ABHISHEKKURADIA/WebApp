@@ -107,7 +107,7 @@ const server = http.createServer((req, res) => {
         })
     }
 
-    else if (req.method == 'POST' && req.url == '/remove?') {
+    else if (req.method == 'POST' && req.url == '/remove') {
         let storage = '';
 
         req.on('data', chunk => {
