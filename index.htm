@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,25 +14,46 @@
         form tr {
             line-height: 1;
         }
+
+        td[id="btn"] {
+            position: absolute;
+            width: auto;
+        }
+
+        #btn {
+            align-items: center;
+
+        }
     </style>
 </head>
+
 <body>
     <form action="/submit" method="POST">
         <table>
             <tr>
                 <td><label for="uname">User Name:</label></td>
-                <td><input type="text" class="input" name="uName" id="uName" placeholder="Enter Your Name" required>
+                <td><input type="text" name="uName" id="uName" placeholder="Enter Your Name" required>
                 </td>
             </tr>
             <tr>
                 <td><label for="umail">User Email:</label></td>
-                <td><input type="email" class="input" name="uMail" id="uMail" placeholder="Enter Your Email" required>
+                <td><input type="email" name="uMail" id="uMail" placeholder="Enter Your Email" required>
                 </td>
             </tr>
-            <tr>
-                <td><button type="submit" class="btn btn-primary">Submit</button></td>
+            <tr style="position: relative;">
+                <td style="width: 33.33%;"><button type="submit" class="btn btn-primary">Submit</button></td>
             </tr>
+
         </table>
     </form>
+    <form action="/display" method="get">
+        <button type="submit">Display All</button>
+    </form>
+    <form action="/remove" method="post">
+        <label for="deleteMail">User Email to Remove:</label>
+        <input type="email" name="deleteMail" id="deleteMail">
+        <button type="submit" class="btn btn-danger">Remove User</button>
+    </form>
 </body>
+
 </html>

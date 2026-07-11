@@ -44,7 +44,7 @@ const server = http.createServer((req, res) => {
 
             console.log(`Received info for ${name} <${email}>`)
 
-            const queryText = `INSERT INTO users VALUES(?, ?)`
+            const queryText = `INSERT INTO users (user_name, user_mail) VALUES (?, ?)`
 
 
             db.query(queryText, [name, email], (err, result) => {
@@ -55,7 +55,7 @@ const server = http.createServer((req, res) => {
                 }
 
                 console.log(`Sucessfully Added Username: ${result.insertId}`)
-                res.writeHead(200, { 'content-Type': 'text/plain' })
+                res.writeHead(200, { 'content-Type': 'text/html' })
                 res.end(`
                         <h2>Sucess!</h2>
                         <p>Thank you, ${name} your email ${email} has been saved.</p>
@@ -64,10 +64,23 @@ const server = http.createServer((req, res) => {
 
             })
 
-            res.end('Data Received')
+            //res.end('Data Received')
         })
 
     }
+
+    else if (req.method == 'GET' && req.url == '/display') {
+        const query = "SELECT * from users;"
+        db.query(query, (err, result, field) => {
+            if (err) {
+                console.error('Error During Database Read: ', err);
+                return;
+            }
+            console.log('Fetched Data: ', result)
+        })
+
+    }
+
     else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('404 Page Not Found');
