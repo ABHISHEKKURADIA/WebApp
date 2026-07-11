@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const http = require('http')
 const mysql = require('mysql')
 const fs = require('fs')
@@ -12,7 +14,7 @@ const db = mysql.createPool({
     connectionLimit: 10
 })
 
-const PORT = process.env.DB_PORT;
+const PORT = process.env.PORT;
 
 const server = http.createServer((req, res) => {
 
