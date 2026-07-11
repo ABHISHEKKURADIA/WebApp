@@ -5,12 +5,14 @@ const { parse } = require('path')
 const path = require('path')
 
 const db = mysql.createPool({
-    host: 'db',
-    user: 'root',
-    password: 'Test@123',
-    database: 'myDB',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     connectionLimit: 10
 })
+
+const PORT = process.env.DB_PORT;
 
 const server = http.createServer((req, res) => {
 
@@ -40,9 +42,10 @@ const server = http.createServer((req, res) => {
 
             console.log(`Received info for ${name} <${email}>`)
 
-            const queryText = `INSERT INTO users VALUES('${name}','${email}')`
+            const queryText = `INSERT INTO users VALUES(?, ?)`
 
-            db.query(queryText, (err, result) => {
+
+            db.query(queryText, [name, email], (err, result) => {
                 if (err) {
                     console.error('Failed during Database update:', err)
                     res.writeHead(500, { 'content-Type': 'text/plain' })
@@ -69,4 +72,6 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(5500);
+server.listen(PORT, () => {
+    console.log(`Server Listening at port ${PORT}`)
+});
