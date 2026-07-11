@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "${5500}:${PORT}"
+      - ${PORT}:${PORT}
     depends_on:
       - ${DB_HOST}
   db:
