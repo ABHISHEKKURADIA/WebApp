@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const https = require('https')
+const http = require('http')
 const mysql = require('mysql2')
 const fs = require('fs')
 const { parse } = require('path')
@@ -16,12 +16,8 @@ const db = mysql.createPool({
 
 const PORT = process.env.PORT;
 
-const secureOptions = {
-    key: fs.readFileSync(path.join(__dirname, 'localhost-key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'localhost.pem'))
-};
 
-const server = https.createServer(secureOptions, (req, res) => {
+const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/') {
         fs.readFile(path.join(__dirname, 'index.htm'), (err, content) => {
