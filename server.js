@@ -18,8 +18,9 @@ const PORT = process.env.PORT;
 
 
 const server = http.createServer((req, res) => {
+    const pathname = req.url.split('?')[0];
 
-    if (req.method === 'GET' && req.url === '/') {
+    if (req.method === 'GET' && pathname === '/') {
         fs.readFile(path.join(__dirname, 'index.htm'), (err, content) => {
             if (err) {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -30,7 +31,7 @@ const server = http.createServer((req, res) => {
             }
         });
     }
-    else if (req.method == 'POST' && req.url == '/submit') {
+    else if (req.method == 'POST' && pathname == '/submit') {
 
         let storage = '';
 
@@ -70,7 +71,7 @@ const server = http.createServer((req, res) => {
 
     }
 
-    else if (req.method == 'GET' && req.url == '/display?') {
+    else if (req.method == 'GET' && pathname == '/display') {
         const query = "SELECT * from users;"
         db.query(query, (err, result) => {
             if (err) {
@@ -108,7 +109,7 @@ const server = http.createServer((req, res) => {
         })
     }
 
-    else if (req.method == 'POST' && req.url == '/remove') {
+    else if (req.method == 'POST' && pathname == '/remove') {
         let storage = '';
 
         req.on('data', chunk => {

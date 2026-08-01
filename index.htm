@@ -7,53 +7,92 @@
     <title>Personal Project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        form {
-            padding: 2%;
+        :root {
+            color-scheme: light;
         }
 
-        form tr {
-            line-height: 1;
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef2ff 100%);
+            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        td[id="btn"] {
-            position: absolute;
-            width: auto;
+        .hero-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border: none;
         }
 
-        #btn {
-            align-items: center;
+        .card {
+            border-radius: 1.25rem;
+        }
 
+        .form-control,
+        .btn {
+            border-radius: 0.9rem;
+        }
+
+        .form-control:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.18);
+        }
+
+        .section-title {
+            letter-spacing: 0.02em;
         }
     </style>
 </head>
 
 <body>
-    <form action="/submit" method="POST">
-        <table>
-            <tr>
-                <td><label for="uname">User Name:</label></td>
-                <td><input type="text" name="uName" id="uName" placeholder="Enter Your Name" required>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="umail">User Email:</label></td>
-                <td><input type="email" name="uMail" id="uMail" placeholder="Enter Your Email" required>
-                </td>
-            </tr>
-            <tr style="position: relative;">
-                <td style="width: 33.33%;"><button type="submit" class="btn btn-primary">Submit</button></td>
-            </tr>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="hero-card text-white p-4 p-md-5 rounded-4 shadow-sm mb-4">
+                    <h1 class="display-6 fw-bold mb-2">User Management Dashboard</h1>
+                    <p class="lead mb-0">Add, view, and remove users using a polished and responsive experience.</p>
+                </div>
 
-        </table>
-    </form>
-    <form action="/display" method="GET">
-        <button type="submit">Display All</button>
-    </form>
-    <form action="/remove" method="POST">
-        <label for="deleteMail">User Email to Remove:</label>
-        <input type="email" name="deleteMail" id="deleteMail">
-        <button type="submit" class="btn btn-danger">Remove User</button>
-    </form>
+                <div class="row g-4">
+                    <div class="col-lg-7">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body p-4 p-md-5">
+                                <h2 class="section-title h4 fw-bold text-primary mb-4">Add a New User</h2>
+                                <form action="/submit" method="POST" class="needs-validation">
+                                    <div class="mb-3">
+                                        <label for="uName" class="form-label fw-semibold">User Name</label>
+                                        <input type="text" class="form-control" name="uName" id="uName" placeholder="Enter Your Name" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="uMail" class="form-label fw-semibold">User Email</label>
+                                        <input type="email" class="form-control" name="uMail" id="uMail" placeholder="Enter Your Email" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body p-4 p-md-5">
+                                <h2 class="section-title h4 fw-bold text-primary mb-4">Quick Actions</h2>
+                                <form action="/display" method="GET" class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-outline-primary">Display All Users</button>
+                                </form>
+
+                                <form action="/remove" method="POST" class="mt-4">
+                                    <div class="mb-3">
+                                        <label for="deleteMail" class="form-label fw-semibold">Remove a User</label>
+                                        <input type="email" class="form-control" name="deleteMail" id="deleteMail" placeholder="Enter Email to Remove">
+                                    </div>
+                                    <button type="submit" class="btn btn-danger px-4">Remove User</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
