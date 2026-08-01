@@ -80,16 +80,16 @@ const server = http.createServer((req, res) => {
             console.log('Fetched Data: ', result)
             let htmlResponse = `
         <h2>Registered Users Are:</h2>
-        <table>
+        <table class="table">
         <tr>
-        <th>Name</ht>
-        <th>Email</th>
+        <th scope="col">Name</ht>
+        <th scope="col">Email</th>
         </tr>
         `
 
             result.forEach(user => {
                 htmlResponse += `
-            <tr>
+            <tr scope="row">
             <td>${user.user_name}</td>
             <td>${user.user_mail}</td>
             </tr>
